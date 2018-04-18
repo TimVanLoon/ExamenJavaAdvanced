@@ -35,11 +35,19 @@ public class EventHandler {
     	ui.getAnswerLabel().setText(answer);
     	
     	Question question = new Question(questionText, answer);
-        repository.save(question);
+    	
+    	try {
+    		repository.save(question);
+    		System.out.println(question.toString() + " saved in repository");
+    	} catch(Exception e) {
+    		System.out.println("Hey boo");
+    	} finally {
+    		System.out.println("Find all : ") ;
+            repository.findAll().forEach(System.out::println);
+    	}
 
-        System.out.println(question.toString() + " saved in repository");
-        System.out.println("Find all : ") ;
-        repository.findAll().forEach(System.out::println);
+       
+        
     }
 }
 
