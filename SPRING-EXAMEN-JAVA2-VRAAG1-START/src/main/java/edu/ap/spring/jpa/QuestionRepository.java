@@ -10,5 +10,7 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
 	Question findByQuestion(String question);
 
 	List<Question> findListByQuestion(String question);
+	
+	List<Question> findByAnswer(String answer);
 }
 

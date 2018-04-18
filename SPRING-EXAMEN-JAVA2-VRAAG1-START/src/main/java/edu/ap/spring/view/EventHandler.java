@@ -40,7 +40,7 @@ public class EventHandler {
     		repository.save(question);
     		System.out.println(question.toString() + " saved in repository");
     	} catch(Exception e) {
-    		System.out.println("Hey boo");
+    		
     	} finally {
     		System.out.println("Find all : ") ;
             repository.findAll().forEach(System.out::println);
