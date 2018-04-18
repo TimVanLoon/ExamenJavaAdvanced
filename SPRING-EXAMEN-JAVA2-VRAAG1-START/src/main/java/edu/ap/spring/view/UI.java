@@ -1,5 +1,6 @@
 package edu.ap.spring.view;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
@@ -12,15 +13,21 @@ import javax.swing.JTextField;
 import javax.swing.TransferHandler;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UI implements InitializingBean {
 	
+	@Autowired
+	EventHandler eventHandler;
+	
 	private JFrame jFrame;
 	private JLabel questionLabel;
+	private JLabel answerLabel;
+	private JLabel answerText;
+	private JLabel spacer;
 	private JTextField questionTextField;
-	private JPasswordField userPass;
 	private JPanel controlPanel;
     private JButton btnAsk;
     
@@ -33,17 +40,25 @@ public class UI implements InitializingBean {
 	    controlPanel = new JPanel();
 	    controlPanel.setLayout(new GridLayout(3, 2));
 
-	    questionLabel = new JLabel("Question : ");
+	    questionLabel = new JLabel("Question: ");
 	    questionTextField = new JTextField(15);
 	    questionTextField.setDragEnabled(true);
-
+	
 	    btnAsk = new JButton();
 	    btnAsk.setText("Ask");
 	    btnAsk.setTransferHandler(new TransferHandler("text"));
+	    btnAsk.addActionListener(eventHandler::whenButtonClicked);
+	    
+	    answerLabel = new JLabel("Answer: ");
+	    answerText = new JLabel();
+
 
 		controlPanel.add(questionLabel);
 		controlPanel.add(questionTextField);
 		controlPanel.add(btnAsk);
+		controlPanel.add(spacer = new JLabel(" "),"span, grow");
+		controlPanel.add(answerLabel);
+		controlPanel.add(answerText);
 
 		jFrame.add(controlPanel);
 		        
@@ -58,16 +73,16 @@ public class UI implements InitializingBean {
         return this.jFrame;
     }
     
-    public JTextField getUserName() {
-    		return this.userName;
-    }
-    
-    public JPasswordField getPassword() {
-		return this.userPass;
+    public JTextField getQuestion() {
+    		return this.questionTextField;
     }
 
     public JButton getButton() {
-        return btnAddUser;
+        return btnAsk;
+    }
+    
+    public JLabel getAnswerLabel() {
+    	return this.answerText;
     }
 	
 	@Override
